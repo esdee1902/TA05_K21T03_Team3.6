@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -40,6 +41,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private boolean showTitleScreen = true;
 	private boolean playing;
 	private boolean gameOver;
+	
+	/*Button*/
+	private JButton btnStart = new JButton("Start");
+	private JButton btnSetting = new JButton("Setting");
 
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
@@ -79,7 +84,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Construct a PongPanel. */
 	public PongPanel() {
 		setBackground(backgroundColor);
-
 		// listen to key presses
 		setFocusable(true);
 		addKeyListener(this);
@@ -93,6 +97,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		step();
 	}
+	
+	
 
 	/** Repeated task */
 	public void step() {
@@ -212,14 +218,25 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
 			g.drawString("Pong Game", 130, 100);
-
-			// FIXME Wellcome message below show smaller than game title
-			g.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-			g.drawString("Press 'P' to play.", 160, 400);
+			add(btnStart);
+			add(btnSetting);
+			btnStart.setBounds(200, 160, 80, 25);
+			btnSetting.setBounds(200, 200, 80, 25);
+			
+			btnStart.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					showTitleScreen = false;
+					playing = true;
+				}
+			});
 		} else if (playing) {
 
 			/* Game is playing */
-
+			btnSetting.setVisible(false);
+			btnStart.setVisible(false);
 			// set the coordinate limit
 			int playerOneRight = playerOneX + playerOneWidth;
 			int playerTwoLeft = playerTwoX;
@@ -283,10 +300,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		if (showTitleScreen) {
-			if (e.getKeyChar() == 'p'||e.getKeyChar() == 'P') {
-				showTitleScreen = false;
-				playing = true;
-			}
+			
 		} else if (playing) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				upPressed = true;
