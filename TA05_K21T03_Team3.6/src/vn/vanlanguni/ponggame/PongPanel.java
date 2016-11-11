@@ -26,9 +26,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.sun.prism.Image;
 /**
  * 
  * @author Invisible Man
@@ -40,7 +42,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private boolean showTitleScreen = true;
 	private boolean playing;
 	private boolean gameOver;
-
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
 
@@ -79,6 +80,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Construct a PongPanel. */
 	public PongPanel() {
 		setBackground(backgroundColor);
+		
+		
 
 		// listen to key presses
 		setFocusable(true);
@@ -100,6 +103,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		if (playing) {
 
 			/* Playing mode */
+
+
 
 			// move player 1
 			// Move up if after moving, paddle is not outside the screen
@@ -218,7 +223,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			g.drawString("Press 'P' to play.", 160, 400);
 		} else if (playing) {
 
-			/* Game is playing */
+			/* Game is playing*/
+			ImageIcon imgPlayBackground = new ImageIcon("Images/BG.jpg");
+			g.drawImage(imgPlayBackground.getImage(), 0, 0, 500,500, null);
+
 
 			// set the coordinate limit
 			int playerOneRight = playerOneX + playerOneWidth;
