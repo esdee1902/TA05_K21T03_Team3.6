@@ -85,7 +85,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		addKeyListener(this);
 
 		// call step() 60 fps
-		Timer timer = new Timer(1000 / 60, this);
+		Timer timer = new Timer(500 / 60, this);
 		timer.start();
 	}
 
@@ -145,6 +145,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// ball bounces off top and bottom of screen
 			if (nextBallTop < 0 || nextBallBottom > getHeight()) {
 				ballDeltaY *= -1;
+				Sound.play("sounds/boing.wav");
 			}
 
 			// will the ball go off the left side?
@@ -165,6 +166,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
 					ballDeltaX *= -1;
+					Sound.play("sounds/boing.wav");
 				}
 			}
 
@@ -187,6 +189,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
 					ballDeltaX *= -1;
+					Sound.play("sounds/boing.wav");
 				}
 			}
 
