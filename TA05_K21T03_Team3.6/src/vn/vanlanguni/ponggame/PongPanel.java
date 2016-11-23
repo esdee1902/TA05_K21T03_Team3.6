@@ -232,6 +232,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			g.drawString("Pong Game", 130, 100);
 			add(btnStart);
 			add(btnSetting);
+			btnStart.setVisible(true);
+			btnSetting.setVisible(true);
 			btnStart.setBounds(200, 160, 80, 25);
 			btnSetting.setBounds(200, 200, 80, 25);
 			
