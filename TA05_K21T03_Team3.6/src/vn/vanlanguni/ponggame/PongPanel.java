@@ -170,6 +170,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					if (playerTwoScore == 3) {
 						playing = false;
 						gameOver = true;
+						Sound.play("Sound/laser_x.wav");
 					}
 					ballX = 225;
 					ballY = 225;
@@ -192,6 +193,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					if (playerOneScore == 3) {
 						playing = false;
 						gameOver = true;
+						Sound.play("Sound/laser_x.wav");
 					}
 					ballX = 225;
 					ballY = 225;
@@ -240,6 +242,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// TODO Auto-generated method stub
 					showTitleScreen = false;
 					playing = true;
+					Sound.play("Sound/boxing_bell.wav");
 				}
 			});
 		} else if (playing) {
