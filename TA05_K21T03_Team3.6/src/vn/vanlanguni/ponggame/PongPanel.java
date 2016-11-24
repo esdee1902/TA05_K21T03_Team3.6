@@ -67,13 +67,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private int playerOneX = 0;
 	private int playerOneY = 250;
 	private int playerOneWidth = 10;
-	private int playerOneHeight = 50;
+	private int playerOneHeight = 180;
 
 	/** Player 2's paddle: position and size */
 	private int playerTwoX = 485;
 	private int playerTwoY = 250;
 	private int playerTwoWidth = 10;
-	private int playerTwoHeight = 50;
+	private int playerTwoHeight = 180;
 
 	/** Speed of the paddle - How fast the paddle move. */
 	private int paddleSpeed = 5;
@@ -147,11 +147,15 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			int playerOneRight = playerOneX + playerOneWidth;
 			int playerOneTop = playerOneY;
 			int playerOneBottom = playerOneY + playerOneHeight;
+			int playerOneMiddleTop = (int)( playerOneHeight * 1/3 + playerOneTop);
+			int playerOneMiddleBot = (int)( playerOneHeight * 2/3 + playerOneTop);
 
 			// Player 2's paddle position
 			int playerTwoLeft = playerTwoX;
 			int playerTwoTop = playerTwoY;
 			int playerTwoBottom = playerTwoY + playerTwoHeight;
+			int playerTwoMiddleTop = (int)( playerTwoHeight * 1/3 + playerTwoTop);
+			int playerTwoMiddleBot = (int)( playerTwoHeight * 2/3 + playerTwoTop);
 
 			// ball bounces off top and bottom of screen
 			if (nextBallTop < 0 || nextBallBottom > getHeight()) {
@@ -174,9 +178,24 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					}
 					ballX = 225;
 					ballY = 225;
+					ballDeltaX = -1;
 				} else {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
+					//ballDeltaX = -1;
+					if(nextBallTop >= playerOneTop && nextBallBottom < playerOneMiddleTop)
+					{
+						ballDeltaX = -5;
+					}
+					else if(nextBallTop >= playerOneMiddleTop && nextBallBottom <=playerOneMiddleBot)
+					{
+						ballDeltaX = -10;
+					}
+					else if(nextBallTop >= playerOneMiddleBot && nextBallBottom <= playerOneBottom)
+					{
+						ballDeltaX = -15;
+					}
+					
 					ballDeltaX *= -1;
 					Sound.play("Sound/boing.wav");
 				}
@@ -186,6 +205,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			if (nextBallRight > playerTwoLeft) {
 				// is it going to miss the paddle?
 				if (nextBallTop > playerTwoBottom || nextBallBottom < playerTwoTop) {
+					
 
 					playerOneScore++;
 
@@ -197,10 +217,24 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					}
 					ballX = 225;
 					ballY = 225;
+					ballDeltaX = -1;
 				} else {
 
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
+					//ballDeltaX = 1;
+					if(nextBallTop >= playerTwoTop && nextBallBottom < playerTwoMiddleTop)
+					{
+						ballDeltaX = 5;
+					}
+					else if(nextBallTop >= playerTwoMiddleTop && nextBallBottom <=playerTwoMiddleBot)
+					{
+						ballDeltaX = 10;
+					}
+					else if(nextBallTop >= playerTwoMiddleBot && nextBallBottom <= playerTwoBottom)
+					{
+						ballDeltaX = 15;
+					}
 					ballDeltaX *= -1;
 					Sound.play("Sound/boing.wav");
 				}
