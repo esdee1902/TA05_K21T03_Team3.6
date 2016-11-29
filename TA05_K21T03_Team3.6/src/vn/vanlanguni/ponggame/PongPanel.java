@@ -49,6 +49,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private JButton btnSetting = new JButton("Setting");
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
+	/*Name*/
+	private String nameChangeBallSetting  = "Images/earth.jpg";
+	private String nameUser1 ="Player 1" , nameUser2 ="Player 2";
+	/*Image Icon	 */
+	 ImageIcon imgChangeBall ;
 
 	/** State on the control keys. */
 	private boolean upPressed;
@@ -285,6 +290,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			/* Game is playing*/
 			ImageIcon imgPlayBackground = new ImageIcon("Images/BG.jpg");
+			ImageIcon imgChangeBall =  new ImageIcon(nameChangeBallSetting); 
 			g.drawImage(imgPlayBackground.getImage(), 0, 0, 500,500, null);
 
 			btnSetting.setVisible(false);
@@ -306,6 +312,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// draw the scores
 			g.setColor(Color.BLUE);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+			g.drawString(nameUser1 , 50, 50);
+			g.drawString(nameUser2, 330, 50);
 			g.drawString(String.valueOf(playerOneScore), 100, 100); // Player 1
 																	// score
 			g.drawString(String.valueOf(playerTwoScore), 380, 100); // Player 2
@@ -313,8 +321,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// draw the ball
 			g.setColor(Color.RED);
-			g.fillOval(ballX, ballY, diameter, diameter);
-
+			
+			//g.fillOval(ballX, ballY, diameter, diameter);
+			g.drawImage(imgChangeBall.getImage(), ballX, ballY, diameter, diameter, null);
 			// draw the paddles
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
@@ -325,18 +334,21 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// Draw scores
 			// TODO Set Blue color
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+			
 			g.setColor(Color.BLUE);
+			g.drawString(nameUser1 , 50, 50);
+			g.drawString(nameUser2, 330, 50);
 			g.drawString(String.valueOf(playerOneScore), 100, 100);
 			g.drawString(String.valueOf(playerTwoScore), 400, 100);
 
 			// Draw the winner name
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			if (playerOneScore > playerTwoScore) {
-				g.drawString("Player 1 Wins!", 135, 200);
+				g.drawString(nameUser1 +" Wins!", 135, 200);
 				g.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 				g.drawString("Press Space to restart", 150, 250);
 			} else {
-				g.drawString("Player 2 Wins!", 135, 200);
+				g.drawString(nameUser2 +" Wins!", 135, 200);
 				g.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 				g.drawString("Press Space to restart", 150, 250);
 			}
@@ -352,7 +364,61 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		if (showTitleScreen) {
-			
+			/* su kien cho chanage ball setting*/
+			if (e.getKeyCode()==KeyEvent.VK_C){
+				ChangeBallSetting w = new ChangeBallSetting();
+				w.setLocationRelativeTo(PongPanel.this);
+				w.setVisible(true);
+				Settings s = w.getSettings();
+				System.out.println("After open window");
+				if (w.dialogResult == MyDialogResult.YES
+						&& s.getBall1() != null) {
+
+					System.out.println("Ball Setting: Neptune");
+					nameChangeBallSetting = s.getBall1();
+
+				} else if (w.dialogResult == MyDialogResult.YES
+						&& s.getBall2() != null) {
+
+					System.out.println("Ball Setting: Football");
+					nameChangeBallSetting = s.getBall2();
+
+				} else if (w.dialogResult == MyDialogResult.YES
+						&& s.getBall3() != null) {
+
+					System.out.println("Ball Setting: Tenis Ball");
+					nameChangeBallSetting = s.getBall3();
+
+				} else {
+					System.out.println("User chose to cancel");
+				}
+				/*
+				else {
+					System.out.println("User chose to cancel");
+				}
+				*/
+			}
+			/* su kien cho chanage user name setting*/
+			else if (e.getKeyCode() == KeyEvent.VK_N){
+				ChangeNameSetting w = new ChangeNameSetting();
+				w.setLocationRelativeTo(PongPanel.this);
+				w.setVisible(true);
+				Settings s = w.getSetings();
+				System.out.println("After open window");
+
+				// Stop and wait for user input
+
+				if (w.dialogResult == MyDialogResult.YES) {
+					System.out.printf(
+							"User settings: \n Username1: %s \n Username2: %s",
+							s.getUserName1(), s.getUserName2());
+					nameUser1 = s.getUserName1();
+					nameUser2 = s.getUserName2();
+				} else {
+					System.out.println("User chose to cancel");
+				}
+			}
+				
 		} else if (playing) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				upPressed = true;
