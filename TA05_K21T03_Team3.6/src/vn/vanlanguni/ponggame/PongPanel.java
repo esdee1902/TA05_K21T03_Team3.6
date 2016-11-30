@@ -51,6 +51,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private Color backgroundColor = Color.BLACK;
 	/*Name*/
 	private String nameChangeBallSetting  = "Images/earth.png";
+	private String imgPaddles1  = "Images/paddles.png";
+	private String imgPaddles2  = "Images/paddles.png";
 	private String nameUser1 ="Player 1" , nameUser2 ="Player 2";
 	/*Image Icon	 */
 	 ImageIcon imgChangeBall ;
@@ -333,8 +335,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			//g.fillOval(ballX, ballY, diameter, diameter);
 			g.drawImage(imgChangeBall.getImage(), ballX, ballY, diameter, diameter, null);
 			// draw the paddles
-			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
-			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
+			ImageIcon imgChangePaddles1 =  new ImageIcon(imgPaddles1); 
+			ImageIcon imgChangePaddles2 =  new ImageIcon(imgPaddles2); 
+			g.drawImage(imgChangePaddles1.getImage(), playerOneX, playerOneY, playerOneWidth, playerOneHeight, null);
+			g.drawImage(imgChangePaddles2.getImage(),playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight, null);
+		
 		} else if (gameOver) {
 
 			/* Show End game screen with winner name and score */
