@@ -25,8 +25,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -88,33 +86,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Player score, show on upper left and right. */
 	private int playerOneScore;
 	private int playerTwoScore;
-	//random
-		ImageIcon sumpaddle = new ImageIcon("Images/plus.png");
-	    ImageIcon minuspaddle = new ImageIcon("Images/minus.png");
-	    
-	    private int count15s = 15;
-	    private int timeToDisplay;
-	    private boolean imagesum = true;
-	    Random rand = new Random();
-	    private int ranX, ranY;
-
-	    private int sumcX, sumcY;
-	    private boolean push = false;
-	    private static boolean lastpush = false;
-	    private static boolean lastcham2 = true;
-	    private static boolean check;
-
-	    private boolean selectima = false;
-
-	    private int countime = 1;
-	    private boolean up = false;
 	
 	
 	/** Construct a PongPanel. */
 	public PongPanel() {
-		ranX = ThreadLocalRandom.current().nextInt(50, 450);
-        ranY = ThreadLocalRandom.current().nextInt(50, 450);
-
 		setBackground(backgroundColor);
 		
 		
@@ -200,16 +175,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 				if (nextBallTop > playerOneBottom || nextBallBottom < playerOneTop) {
 
 					playerTwoScore++;
-					
-					playerOneHeight = 180;
-                    playerTwoHeight = 180;
-
-                    playerTwoX = 484;
-                    playerTwoY = 205;
-                    playerOneX = 0;
-                    playerOneY = 205;
-                    
-                    lastpush = true;
 
 					// Player 2 Win, restart the game
 					if (playerTwoScore == 3) {
@@ -220,7 +185,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					ballX = 225;
 					ballY = 225;
 					ballDeltaX = -1;
-					
 				} else {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
@@ -240,8 +204,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					
 					ballDeltaX *= -1;
 					Sound.play("Sound/boing.wav");
-					lastpush = false;
-                    check = true; 				
 				}
 			}
 
@@ -252,16 +214,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					
 
 					playerOneScore++;
-					
-					playerOneHeight = 180;
-                    playerTwoHeight = 180;
-
-                    playerTwoX = 484;
-                    playerTwoY = 205;
-                    playerOneX = 0;
-                    playerOneY = 205;
-
-                    lastpush = true;
 
 					// Player 1 Win, restart the game
 					if (playerOneScore == 3) {
@@ -291,9 +243,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					}
 					ballDeltaX *= -1;
 					Sound.play("Sound/boing.wav");
-					check = false; 
-                    lastpush = false;
-
 				}
 			}
 
@@ -386,81 +335,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// draw the paddles
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
-			 if (count15s % 15000 == 0) {
-	                // g.clearRect(sumX, sumY, sumpaddle.getIconWidth(), sumpaddle.getIconHeight());
-	                countime++;
-
-	                sumcX = ranX;
-	                sumcY = ranY;
-
-	                ranX = ThreadLocalRandom.current().nextInt(50, 380);
-	                ranY = ThreadLocalRandom.current().nextInt(50, 380);
-
-	                // g.drawImage(sumpaddle.getImage(), sumX, sumY, null);
-	                push = false;
-	            }
-	            if (push == false) {
-	                if (countime % 2 == 0) {
-	                    g.drawImage(sumpaddle.getImage(), ranX, ranY,diameter*3,diameter*3, null);
-	                } else {
-	                    g.drawImage(minuspaddle.getImage(), ranX, ranY,diameter*3, diameter*3, null);
-	                }
-
-	            }
-
-	            int xwA1 = ranX + sumpaddle.getIconWidth() / 2;
-	            int xwB1 = ballX + diameter / 2;
-	            int wwAB1 = (sumpaddle.getIconWidth() + diameter) / 2;
-
-	            // =================================== Huong Y
-	            int yHA1 = ranY + sumpaddle.getIconHeight() / 2;
-	            int yHB1 = ballY + diameter / 2;
-	            int HHAB1 = (sumpaddle.getIconHeight() + diameter) / 2;
-
-	            // dieu kien khi cham
-	            if (((Math.abs(xwA1 - xwB1) < Math.abs(wwAB1)) && (Math.abs(yHA1 - yHB1) < Math.abs(HHAB1)))) {
-	                if (lastpush == false) {
-	                    if (check == true) {
-	                        if (countime % 2 == 0) {
-	                            if (playerOneHeight <= 50) {
-	                                playerOneHeight = playerOneHeight + 25;
-	                            } else {
-	                                playerOneHeight = playerOneHeight;
-	                            }
-	                        }
-
-	                        if (countime % 2 != 0) {
-	                            if (playerOneHeight <= 25) {
-	                                playerOneHeight = playerOneHeight;
-	                            } else {
-	                                playerOneHeight = playerOneHeight - 25;
-	                            }
-	                        }
-	                    }
-
-	                    if (check == false) {
-	                        if (countime % 2 == 0) {
-	                            if (playerTwoHeight <= 50) {
-	                                playerTwoHeight = playerTwoHeight + 25;
-	                            } else {
-	                                playerTwoHeight = playerTwoHeight;
-	                            }
-	                        }
-
-	                        if (countime % 2 != 0) {
-	                            if (playerTwoHeight <= 25) {
-	                                playerTwoHeight = playerTwoHeight;
-	                            } else {
-	                                playerTwoHeight = playerTwoHeight - 25;
-	                            }
-	                        }
-
-	                    }
-	                }
-
-	                push = true;
-
-	            }
 		} else if (gameOver) {
 
 			/* Show End game screen with winner name and score */
