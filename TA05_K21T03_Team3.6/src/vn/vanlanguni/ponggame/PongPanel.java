@@ -346,6 +346,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// Draw scores
 			// TODO Set Blue color
+			ImageIcon imgWellcome = new ImageIcon("Images/wellcome.gif");
+			g.drawImage(imgWellcome.getImage(), 0, 0, 500,500, null);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 36));
 			
 			g.setColor(Color.white);
